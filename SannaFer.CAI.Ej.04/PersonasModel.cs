@@ -17,6 +17,17 @@ namespace SannaFer.CAI.Ej._04
              new Persona {Documento = 27555678, Apellido ="Pratto", Nombre = "Oso", Telefono = "4567-1156" }
 
             };
-        
+
+        internal string Borrar(Persona personaSeleccionada)
+        {
+            if (personaSeleccionada.Documento == 27555678)
+            {
+                return "No puede borrar a esta persona";
+            }
+
+            Personas.Remove(personaSeleccionada);
+
+            return "Ok";
+        }
     }
 }
