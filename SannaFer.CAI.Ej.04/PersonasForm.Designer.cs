@@ -80,6 +80,7 @@
             CancelarBtn.TabIndex = 9;
             CancelarBtn.Text = "Cancelar";
             CancelarBtn.UseVisualStyleBackColor = true;
+            CancelarBtn.Click += CancelarBtn_Click;
             // 
             // AceptarBtn
             // 
@@ -89,6 +90,7 @@
             AceptarBtn.TabIndex = 8;
             AceptarBtn.Text = "Aceptar";
             AceptarBtn.UseVisualStyleBackColor = true;
+            AceptarBtn.Click += AceptarBtn_Click;
             // 
             // ApellidoTextBox
             // 

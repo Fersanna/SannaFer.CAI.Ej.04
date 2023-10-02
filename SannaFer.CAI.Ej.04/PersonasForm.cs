@@ -64,7 +64,6 @@ namespace SannaFer.CAI.Ej._04
                 var error = model.Borrar(personaSeleccionada);
 
 
-
                 if (error != "Ok")
                 {
                     MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -86,7 +85,7 @@ namespace SannaFer.CAI.Ej._04
 
             Persona personaSeleccionada = (Persona)PersonasListView.SelectedItems[0].Tag;
 
-            DocumentoTextBox.Text =personaSeleccionada.Documento.ToString();
+            DocumentoTextBox.Text = personaSeleccionada.Documento.ToString();
             ApellidoTextBox.Text = personaSeleccionada.Apellido.ToString();
             NombreTextBox.Text = personaSeleccionada.Nombre.ToString();
             TelefonoTextBox.Text = personaSeleccionada.Telefono.ToString();
@@ -94,6 +93,59 @@ namespace SannaFer.CAI.Ej._04
             PersonasEditBox.Enabled = false;
             PersonaBox.Enabled = true;
 
+
+        }
+
+        private void CancelarBtn_Click(object sender, EventArgs e)
+        {
+            DocumentoTextBox.Text = "";
+            ApellidoTextBox.Text = "";
+            NombreTextBox.Text = "";
+            TelefonoTextBox.Text = "";
+
+            PersonasEditBox.Enabled = true;
+            PersonaBox.Enabled = false;
+        }
+
+        private void AceptarBtn_Click(object sender, EventArgs e)
+        {
+            Persona personaSeleccionada = (Persona)PersonasListView.SelectedItems[0].Tag;
+
+           Persona nuevaVersion = new Persona();
+
+            //Aca se construye a partir de la nueva pantalla
+
+            if (!int.TryParse(DocumentoTextBox.Text, out int documento))
+            {
+                MessageBox.Show("No ha ingresado un numero");
+            }
+
+            
+
+            var error = model.modificar(personaSeleccionada, nuevaVersion);
+
+
+
+            if (error != "Ok")
+            {
+                MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var item = PersonasListView.SelectedItems[0];
+
+            item.Text = personaSeleccionada.Documento.ToString();
+            item.SubItems.Add(personaSeleccionada.Apellido.ToString());
+            item.SubItems.Add(personaSeleccionada.Nombre.ToString());
+            item.SubItems.Add(personaSeleccionada.Telefono.ToString());
+
+            DocumentoTextBox.Text = "";
+            ApellidoTextBox.Text = "";
+            NombreTextBox.Text = "";
+            TelefonoTextBox.Text = "";
+
+            PersonasEditBox.Enabled = true;
+            PersonaBox.Enabled = false;
 
         }
     }
