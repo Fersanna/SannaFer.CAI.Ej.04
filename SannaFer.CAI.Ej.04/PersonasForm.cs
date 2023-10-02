@@ -12,6 +12,11 @@ namespace SannaFer.CAI.Ej._04
         private void PersonasForm_Load(object sender, EventArgs e)
         {
             model = new PersonasModel();
+
+            foreach (var persona in model.Personas)
+            {
+             //agregar persona a la lista  
+            }
         }
     }
 }

@@ -8,5 +8,15 @@ namespace SannaFer.CAI.Ej._04
 {
     internal class PersonasModel
     {
+        public List<Persona> Personas = new List<Persona>()
+
+            {
+             new Persona {Documento = 27285688, Apellido ="Sanna", Nombre = "Fernando", Telefono = "4567-6911" },
+             new Persona {Documento = 27285700, Apellido ="Messi", Nombre = "Lio", Telefono = "4567-5555" },
+             new Persona {Documento = 27285800, Apellido ="Riquelme", Nombre = "Juan", Telefono = "4567-7596" },
+             new Persona {Documento = 27555678, Apellido ="Pratto", Nombre = "Oso", Telefono = "4567-1156" }
+
+            };
+        
     }
 }
