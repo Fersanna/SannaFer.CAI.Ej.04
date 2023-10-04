@@ -11,7 +11,7 @@ namespace SannaFer.CAI.Ej._04
 
         private void PersonasForm_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Formulario cargado");
+        
             model = new PersonasModel();
 
             if (PersonasListView != null)
@@ -39,10 +39,7 @@ namespace SannaFer.CAI.Ej._04
 
         }
 
-        private void PersonaBox_Enter(object sender, EventArgs e)
-        {
-
-        }
+      
 
 
 
@@ -109,43 +106,121 @@ namespace SannaFer.CAI.Ej._04
 
         private void AceptarBtn_Click(object sender, EventArgs e)
         {
-            Persona personaSeleccionada = (Persona)PersonasListView.SelectedItems[0].Tag;
-
-           Persona nuevaVersion = new Persona();
-
-            //Aca se construye a partir de la nueva pantalla
-
-            if (!int.TryParse(DocumentoTextBox.Text, out int documento))
+            // Verificar si hay elementos seleccionados
+            if (PersonasListView.SelectedItems.Count > 0)
             {
-                MessageBox.Show("No ha ingresado un numero");
+                // Modificar persona existente
+                Persona personaSeleccionada = (Persona)PersonasListView.SelectedItems[0].Tag;
+
+                // Obtener los nuevos valores desde los TextBox
+                if (!int.TryParse(DocumentoTextBox.Text, out int documento))
+                {
+                    MessageBox.Show("Por favor, ingrese un número válido para el documento.");
+                    return;
+                }
+
+                string apellido = ApellidoTextBox.Text;
+                string nombre = NombreTextBox.Text;
+                string telefono = TelefonoTextBox.Text;
+
+                // Validar los nuevos valores si es necesario
+
+                // Crear nueva versión de la persona
+                Persona nuevaVersion = new Persona
+                {
+                    Documento = documento,
+                    Apellido = apellido,
+                    Nombre = nombre,
+                    Telefono = telefono
+                };
+
+                // Modificar la persona en el modelo
+                var error = model.Modificar(personaSeleccionada, nuevaVersion);
+
+                if (error != "Ok")
+                {
+                    MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Actualizar la vista en el ListView
+                var item = PersonasListView.SelectedItems[0];
+                item.Text = nuevaVersion.Documento.ToString();
+                item.SubItems[1].Text = nuevaVersion.Apellido;
+                item.SubItems[2].Text = nuevaVersion.Nombre;
+                item.SubItems[3].Text = nuevaVersion.Telefono;
+            }
+            else
+            {
+                // Agregar nueva persona
+                if (!int.TryParse(DocumentoTextBox.Text, out int documento))
+                {
+                    MessageBox.Show("Por favor, ingrese un número válido para el documento.");
+                    return;
+                }
+
+                string apellido = ApellidoTextBox.Text;
+                string nombre = NombreTextBox.Text;
+                string telefono = TelefonoTextBox.Text;
+
+                // Validar los nuevos valores si es necesario
+
+                // Crear nueva persona
+                Persona personaAAgregar = new Persona
+                {
+                    Documento = documento,
+                    Apellido = apellido,
+                    Nombre = nombre,
+                    Telefono = telefono
+                };
+
+                // Agregar la nueva persona al modelo
+                var error = model.AgregarPersona(personaAAgregar);
+
+                if (error != null)
+                {
+                    MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Crear un nuevo objeto ListViewItem y agregar los datos de la nueva persona a él
+                ListViewItem newItem = new ListViewItem();
+                newItem.Text = personaAAgregar.Documento.ToString();
+                newItem.SubItems.Add(personaAAgregar.Apellido);
+                newItem.SubItems.Add(personaAAgregar.Nombre);
+                newItem.SubItems.Add(personaAAgregar.Telefono);
+                newItem.Tag = personaAAgregar; // Asignar la nueva persona al Tag del ListViewItem
+
+                // Agregar el nuevo item a la lista
+                PersonasListView.Items.Add(newItem);
+
+                // Limpiar los TextBox después de agregar la nueva persona
+                DocumentoTextBox.Text = "";
+                ApellidoTextBox.Text = "";
+                NombreTextBox.Text = "";
+                TelefonoTextBox.Text = "";
             }
 
-            
-
-            var error = model.modificar(personaSeleccionada, nuevaVersion);
-
+            // Resto del código para habilitar/deshabilitar controles si es necesario
+        }
 
 
-            if (error != "Ok")
-            {
-                MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            var item = PersonasListView.SelectedItems[0];
 
-            item.Text = personaSeleccionada.Documento.ToString();
-            item.SubItems.Add(personaSeleccionada.Apellido.ToString());
-            item.SubItems.Add(personaSeleccionada.Nombre.ToString());
-            item.SubItems.Add(personaSeleccionada.Telefono.ToString());
+        private void NuevaPersonaBtn_Click_1(object sender, EventArgs e)
+        {
+            PersonasEditBox.Enabled = false;
+            PersonaBox.Enabled = true;
 
+            PersonasListView.SelectedItems.Clear();
+
+            // Limpia los TextBox después de agregar la nueva persona
             DocumentoTextBox.Text = "";
             ApellidoTextBox.Text = "";
             NombreTextBox.Text = "";
             TelefonoTextBox.Text = "";
 
-            PersonasEditBox.Enabled = true;
-            PersonaBox.Enabled = false;
+          
 
         }
     }

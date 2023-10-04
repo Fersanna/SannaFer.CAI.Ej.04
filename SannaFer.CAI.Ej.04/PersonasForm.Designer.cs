@@ -70,7 +70,7 @@
             PersonaBox.TabIndex = 4;
             PersonaBox.TabStop = false;
             PersonaBox.Text = "Persona";
-            PersonaBox.Enter += PersonaBox_Enter;
+          
             // 
             // CancelarBtn
             // 
@@ -120,9 +120,9 @@
             TelefonoLabel.AutoSize = true;
             TelefonoLabel.Location = new Point(288, 91);
             TelefonoLabel.Name = "TelefonoLabel";
-            TelefonoLabel.Size = new Size(87, 20);
+            TelefonoLabel.Size = new Size(67, 20);
             TelefonoLabel.TabIndex = 4;
-            TelefonoLabel.Text = "Documento";
+            TelefonoLabel.Text = "Telefono";
             // 
             // NombreTextBox
             // 
@@ -176,6 +176,7 @@
             NuevaPersonaBtn.TabIndex = 7;
             NuevaPersonaBtn.Text = "Nueva";
             NuevaPersonaBtn.UseVisualStyleBackColor = true;
+            NuevaPersonaBtn.Click += NuevaPersonaBtn_Click_1;
             // 
             // ModificarBtn
             // 
